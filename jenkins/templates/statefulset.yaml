@@ -36,6 +36,29 @@ spec:
           name: http
         - containerPort: 50000
           name: jnlp
+        startupProbe:
+          httpGet:
+            path: "/login"
+            port: 8080
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 12  
+        livenessProbe:
+          httpGet:
+            path: "/login"
+            port: 8080
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 5
+        readinessProbe: 
+          httpGet:
+            path: "/login"
+            port: 8080
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
         env:
           - name: CASC_JENKINS_CONFIG
             value: /var/jenkins_home/casc_configs

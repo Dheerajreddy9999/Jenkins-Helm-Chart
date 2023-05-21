@@ -38,11 +38,12 @@ spec:
           name: jnlp
         startupProbe:
           httpGet:
-            path: "/login"
+            path: '/login'
             port: 8080
+          initialDelaySeconds: 90
+          failureThreshold: 30  
           periodSeconds: 10
           timeoutSeconds: 5
-          failureThreshold: 30  
         livenessProbe:
           httpGet:
             path: "/login"

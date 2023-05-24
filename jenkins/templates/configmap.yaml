@@ -14,7 +14,7 @@ data:
           enableCaptcha: false
           users:
           - id: "admin"
-            name: "Jenkins Admin"
+            name: "Dheeraj"
             password: "admin"
       numExecutors: 0
 

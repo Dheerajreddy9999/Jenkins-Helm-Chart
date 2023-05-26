@@ -9,7 +9,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+    host: jenkins.cloud.dheeraj.com
+    http:
       paths:
       - pathType: Prefix
         path: /

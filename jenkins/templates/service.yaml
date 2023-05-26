@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     app: jenkins
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: http
     port: 8080

@@ -16,6 +16,6 @@ spec:
           service:
             name: jenkins-ui
             port:
-              number: 8080
+              number: 80
       
       

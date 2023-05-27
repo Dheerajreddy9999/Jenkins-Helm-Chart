@@ -1,0 +1,56 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: kubeissuer
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: demo@demo.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: kubeissuer
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class: nginx          
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kubecert
+spec:
+  secretName: demo
+  issuerRef:
+    name: kubeissuer
+    kind: ClusterIssuer
+  commonName: jenkins.cloud.dheeraj.com
+  dnsNames:
+  - jenkins.cloud.dheeraj.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: kubeissuer
+    kubernetes.io/ingress.class: nginx
+  name: kube-certs-ingress
+spec:
+  rules:
+  - host: jenkins.cloud.dheeraj.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: kube-certs
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - jenkins.cloud.dheeraj.com
+    secretName: demo
+

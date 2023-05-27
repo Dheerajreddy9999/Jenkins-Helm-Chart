@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: jenkins
-        image: dheerajlearningdocker/jenkins:v1.0
+        image: dheerajlearningdocker/jenkins:v1.1
         imagePullPolicy: Always
         resources:
           requests:

@@ -48,5 +48,10 @@ controller:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 3
+ 
+  persistance:
+    name: jenkins-home
+    accessModes: ReadWriteOnce
+    storage: 8Gi
 
   

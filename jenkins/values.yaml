@@ -1,11 +1,12 @@
 controller:
   namespace: default
-  deploymentName: jenkins
+  StatefulsetName: jenkins
 
   image: dheerajlearningdocker/jenkins
   tag: 1.0
   imagePullPolicy: Always
   replicas: 1
+  env: dev
 
   serviceAccountName: jenkins
 
@@ -18,10 +19,10 @@ controller:
       memory: 2Gi
 
   ports:
-    - containerPort: 8080
-      name: http
-    - containerPort: 50000
-      name: jnlp
+    containerPort1 : 8080
+    name1 : http
+    containerPort2: 50000
+    name2: jnlp
 
   
   startupProbe:

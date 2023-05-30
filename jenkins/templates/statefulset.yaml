@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: jenkins
+  name: {{ .Values.controller.StatefulsetName }}
   namespace: {{ .Values.controller.namespace }}
 spec:
   selector:
     matchLabels:
       app: jenkins
-      env: dev
+      env: {{ .Values.controller.env }}
       version: 2.387
   serviceName: jenkins-ui
-  replicas: 1
+  replicas: {{ .Values.controller.replicas }}
   template:
     metadata:
       labels:
         app: jenkins
-        enc: dev
+        env: {{ .Values.controller.env }}
         version: 2.387
     spec:
       securityContext:
@@ -26,20 +26,21 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: jenkins
-        image: dheerajlearningdocker/jenkins:v1.1
-        imagePullPolicy: Always
+        {{- $img := .Values.controller.env  }}
+        image: {{ .Values.controller.image }}:{{- if eq $img "dev"}}1.1 {{- else}}1.0 {{- end }}
+        imagePullPolicy: {{ .Values.controller.imagePullPolicy }}
         resources:
           requests:
-            cpu: 500m
-            memory: 500Mi
+            cpu: {{ .Values.controller.resources.requests.cpu }}
+            memory: {{ .Values.controller.resources.requests.memory }}
           limits:
-            cpu: 1000m
-            memory: 2Gi
+            cpu: {{ .Values.controller.resources.limits.cpu }}
+            memory: {{ .Values.controller.resources.limits.memory }}
         ports:
-        - containerPort: 8080
-          name: http
-        - containerPort: 50000
-          name: jnlp
+        - containerPort: {{ .Values.controller.ports.containerPort1 }}
+          name: {{ .Values.controller.ports.name1 }}
+        - containerPort: {{ .Values.controller.ports.containerPort2 }}
+          name: {{ .Values.controller.ports.name2 }}
         startupProbe:
           httpGet:
             path: '/login'

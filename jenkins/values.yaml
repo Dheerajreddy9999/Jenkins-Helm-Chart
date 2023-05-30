@@ -1,12 +1,11 @@
 controller:
   namespace: default
-  StatefulsetName: jenkins
 
   image: dheerajlearningdocker/jenkins
   tag: 1.0
   imagePullPolicy: Always
   replicas: 1
-  env: dev
+  env: ppe
 
   serviceAccountName: jenkins
 

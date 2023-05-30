@@ -1,22 +1,18 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.controller.StatefulsetName }}
+  name: {{ .Release.Name }}
   namespace: {{ .Values.controller.namespace }}
 spec:
   selector:
     matchLabels:
-      app: jenkins
-      env: {{ .Values.controller.env }}
-      version: 2.387
+    {{- include "jenkins.lables" . | nindent 6 }}
   serviceName: jenkins-ui
   replicas: {{ .Values.controller.replicas }}
   template:
     metadata:
       labels:
-        app: jenkins
-        env: {{ .Values.controller.env }}
-        version: 2.387
+      {{- include "jenkins.lables" . | nindent 6 }}
     spec:
       securityContext:
             fsGroup: 1000 
@@ -27,7 +23,11 @@ spec:
       containers:
       - name: jenkins
         {{- $img := .Values.controller.env  }}
+        {{- if or ( eq $img "dev") (eq $img "prod") }}
         image: {{ .Values.controller.image }}:{{- if eq $img "dev"}}1.1 {{- else}}1.0 {{- end }}
+        {{- else }}
+        image: {{ .Values.controller.image }}:{{ .Values.controller.tag }}
+        {{- end }}
         imagePullPolicy: {{ .Values.controller.imagePullPolicy }}
         resources:
           requests:
@@ -41,30 +41,7 @@ spec:
           name: {{ .Values.controller.ports.name1 }}
         - containerPort: {{ .Values.controller.ports.containerPort2 }}
           name: {{ .Values.controller.ports.name2 }}
-        startupProbe:
-          httpGet:
-            path: '/login'
-            port: 8080
-          initialDelaySeconds: 90
-          failureThreshold: 30  
-          periodSeconds: 10
-          timeoutSeconds: 5
-        livenessProbe:
-          httpGet:
-            path: "/login"
-            port: 8080
-          initialDelaySeconds: 90
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 5
-        readinessProbe: 
-          httpGet:
-            path: "/login"
-            port: 8080
-          initialDelaySeconds: 90
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
+          {{- include "jenkins.healthchecks" . | nindent 8 }}
         env:
           - name: CASC_JENKINS_CONFIG
             value: /var/jenkins_home/casc_configs

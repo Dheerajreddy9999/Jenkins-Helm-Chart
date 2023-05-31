@@ -1,7 +1,7 @@
 {{- define "jenkins.lables" -}}
 app: jenkins
 env: {{ .Values.controller.env }}
-version: 2.387
+version: {{ .Values.controller.version | quote }}
 {{- end  -}}
 
 

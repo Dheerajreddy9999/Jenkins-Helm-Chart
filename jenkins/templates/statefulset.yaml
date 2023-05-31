@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Release.Name }}
+  name: jenkins
   namespace: {{ .Values.controller.namespace }}
 spec:
   selector:
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-      {{- include "jenkins.lables" . | nindent 6 }}
+      {{- include "jenkins.lables" . | nindent 8 }}
     spec:
     {{- include "jenkins.securityContext" . | nindent 6 }}
       serviceAccountName: jenkins
@@ -20,7 +20,7 @@ spec:
       containers:
       - name: jenkins
         {{- $img := .Values.controller.env  }}
-        {{- if or ( eq $img "dev") (eq $img "prod") }}
+        {{- if eq $img "ppe" }}
         image: {{ .Values.controller.image }}:{{- if eq $img "dev"}}1.1 {{- else}}1.0 {{- end }}
         {{- else }}
         image: {{ .Values.controller.image }}:{{ .Values.controller.tag }}
@@ -28,11 +28,11 @@ spec:
         imagePullPolicy: {{ .Values.controller.imagePullPolicy }}
         resources:
           requests:
-            cpu: {{ .Values.controller.resources.requests.cpu }}
-            memory: {{ .Values.controller.resources.requests.memory }}
+            cpu: {{ .Values.controller.resources.requests.cpu | quote }}
+            memory: {{ .Values.controller.resources.requests.memory | quote }}
           limits:
-            cpu: {{ .Values.controller.resources.limits.cpu }}
-            memory: {{ .Values.controller.resources.limits.memory }}
+            cpu: {{ .Values.controller.resources.limits.cpu | quote }}
+            memory: {{ .Values.controller.resources.limits.memory | quote }}
         ports:
         - containerPort: {{ .Values.controller.ports.containerPort1 }}
           name: {{ .Values.controller.ports.name1 }}
@@ -55,10 +55,10 @@ spec:
   - metadata:
       name: jenkins-home
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: [ {{ .Values.persistance.accessModes | quote }} ]
       resources:
         requests:
-          storage: 8Gi
+          storage: {{ .Values.persistance.storage}}
 
 
 

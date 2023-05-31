@@ -6,6 +6,14 @@ controller:
   imagePullPolicy: Always
   replicas: 1
   env: ppe
+  version: 2.387
+
+  service:
+    type: ClusterIP
+    nodePort: 30080
+    HttpPort: 8080
+    JnlpPort: 50000
+
 
   resources:
     requests:
@@ -56,5 +64,16 @@ controller:
     name: jenkins-home
     accessModes: ReadWriteOnce
     storage: 8Gi
+
+  ingress:
+    enabled: true
+    serviceName: jenkins-ui
+    port: 8080
+
+
+persistance:
+  storage: 8Gi
+  accessModes: ReadWriteOnce
+    
 
   

@@ -14,10 +14,7 @@ spec:
       labels:
       {{- include "jenkins.lables" . | nindent 6 }}
     spec:
-      securityContext:
-            fsGroup: 1000 
-            runAsUser: 1000
-            runAsNonRoot: true
+    {{- include "jenkins.securityContext" . | nindent 6 }}
       serviceAccountName: jenkins
       terminationGracePeriodSeconds: 10
       containers:

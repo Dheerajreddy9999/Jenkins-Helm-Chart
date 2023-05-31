@@ -7,8 +7,6 @@ controller:
   replicas: 1
   env: ppe
 
-  serviceAccountName: jenkins
-
   resources:
     requests:
       cpu: 500m
@@ -24,6 +22,11 @@ controller:
     name2: jnlp
 
   
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
+    runAsNonRoot: true
+
   startupProbe:
     httpGet:
       path: '/login'

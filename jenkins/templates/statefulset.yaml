@@ -20,7 +20,7 @@ spec:
       containers:
       - name: jenkins
         {{- $img := .Values.controller.env  }}
-        {{- if eq $img "ppe" }}
+        {{- if eq $img "dev" }}
         image: {{ .Values.controller.image }}:{{- if eq $img "dev"}}1.1 {{- else}}1.0 {{- end }}
         {{- else }}
         image: {{ .Values.controller.image }}:{{ .Values.controller.tag }}
@@ -38,7 +38,9 @@ spec:
           name: {{ .Values.controller.ports.name1 }}
         - containerPort: {{ .Values.controller.ports.containerPort2 }}
           name: {{ .Values.controller.ports.name2 }}
+           {{- if .Values.controller.HealthCheckEnable }}
           {{- include "jenkins.healthchecks" . | nindent 8 }}
+          {{- end }}
         env:
           - name: CASC_JENKINS_CONFIG
             value: /var/jenkins_home/casc_configs

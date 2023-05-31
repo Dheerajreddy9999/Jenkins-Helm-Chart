@@ -34,7 +34,8 @@ controller:
     fsGroup: 1000
     runAsUser: 1000
     runAsNonRoot: true
-
+   
+  HealthCheckEnable: false 
   startupProbe:
     httpGet:
       path: '/login'

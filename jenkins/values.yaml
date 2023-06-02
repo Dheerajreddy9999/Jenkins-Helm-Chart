@@ -2,7 +2,7 @@ controller:
   namespace: default
 
   image: dheerajlearningdocker/jenkins
-  tag: v1.0
+  tag: v1.1
   imagePullPolicy: Always
   replicas: 1
   env: ppe

@@ -2,5 +2,5 @@ kubernetes
 workflow-aggregator
 git
 configuration-as-code
-pipeline-stage-view
+blueocean
 sonar

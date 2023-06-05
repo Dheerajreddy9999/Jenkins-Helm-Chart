@@ -2,5 +2,4 @@ kubernetes
 workflow-aggregator
 git
 configuration-as-code
-blueocean
 sonar

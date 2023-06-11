@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jenkins-ui
-  namespace: {{ .Values.controller.namespace }}
+  namespace: default
 spec:
   selector:
     app: jenkins
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jnkins-jnlp
-  namespace: {{ .Values.controller.namespace }}
+  namespace: default
 spec:
   selector:
     app: jenkins

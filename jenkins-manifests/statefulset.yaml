@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: jenkins
-  namespace: {{ .Values.controller.namespace }}
+  namespace: default
 spec:
   selector:
     matchLabels:
       app: jenkins
       env: dev
-      version: 2.387
+      version: "2.387"
   serviceName: jenkins-ui
   replicas: 1
   template:
@@ -16,7 +16,7 @@ spec:
       labels:
         app: jenkins
         enc: dev
-        version: 2.387
+        version: "2.387"
     spec:
       securityContext:
             fsGroup: 1000 

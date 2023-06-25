@@ -3,3 +3,4 @@ workflow-aggregator
 git
 configuration-as-code
 sonar
+kubernetes-cli

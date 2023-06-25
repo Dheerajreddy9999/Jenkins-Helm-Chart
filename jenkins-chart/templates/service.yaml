@@ -11,7 +11,7 @@ spec:
   - name: http
     port: {{ .Values.controller.service.HttpPort }}
     targetPort: 8080
-     {{- if and (eq .Values.controller.service.type "NodePort") ( eq .Values.controller.ingress.enabled "false" )  }}
+     {{- if and (eq .Values.controller.service.type "NodePort") ( eq .Values.controller.ingress.enabled false )  }}
     nodePort: {{ .Values.controller.service.nodePort }}
     {{- end }}
 

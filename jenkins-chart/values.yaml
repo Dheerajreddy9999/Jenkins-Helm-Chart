@@ -2,7 +2,7 @@ controller:
   namespace: default
 
   image: dheerajlearningdocker/jenkins
-  tag: v1.1
+  tag: v1.1-alpine
   imagePullPolicy: Always
   replicas: 1
   env: ppe
@@ -24,24 +24,24 @@ controller:
       memory: 2Gi
 
   ports:
-    containerPort1 : 8080
-    name1 : http
+    containerPort1: 8080
+    name1: http
     containerPort2: 50000
     name2: jnlp
 
-  
+
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
     runAsNonRoot: true
-   
-  HealthCheckEnable: false 
+
+  HealthCheckEnable: false
   startupProbe:
     httpGet:
       path: '/login'
       port: 8080
     initialDelaySeconds: 90
-    failureThreshold: 30  
+    failureThreshold: 30
     periodSeconds: 10
     timeoutSeconds: 5
   livenessProbe:
@@ -52,7 +52,7 @@ controller:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 5
-  readinessProbe: 
+  readinessProbe:
     httpGet:
       path: "/login"
       port: 8080
@@ -60,7 +60,7 @@ controller:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 3
- 
+
   persistance:
     name: jenkins-home
     accessModes: ReadWriteOnce
@@ -75,6 +75,6 @@ controller:
 persistance:
   storage: 8Gi
   accessModes: ReadWriteOnce
-    
 
-  
+
+

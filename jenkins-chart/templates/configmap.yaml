@@ -32,12 +32,11 @@ data:
           namespace: "default"
           serverUrl: "https://kubernetes.default"
           podLabels:
-          - key: "jenkins/jenkins-jenkins-agent"
-            value: "true"
+          - key: "jenkins"
+            value: "agent"
           templates:
             - name: "default"
               namespace: "default"
-              id: c6441dbc474cd880232d3dc2549a297f0c9b8dd592adf21000f4a8f8168d226f
               containers:
               - name: "jnlp"
                 alwaysPullImage: false

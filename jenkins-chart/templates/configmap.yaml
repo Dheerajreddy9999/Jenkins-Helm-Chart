@@ -25,6 +25,7 @@ data:
           defaultsProviderTemplate: ""
           connectTimeout: "5"
           readTimeout: "15"
+          webSocket: true
           jenkinsUrl: "http://jenkins-ui.default.svc.cluster.local:8080"
           maxRequestsPerHostStr: "32"
           name: "kubernetes"
@@ -46,9 +47,6 @@ data:
                   - envVar:
                       key: "JENKINS_URL"
                       value: "http://jenkins-ui.default.svc.cluster.local:8080/"
-                  - envVar: 
-                      key: "JENKINS_WEB_SOCKET"
-                      value: "true"
                 image: "jenkins/inbound-agent:3107.v665000b_51092-15"
                 privileged: "false"
                 ttyEnabled: false

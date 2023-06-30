@@ -25,11 +25,11 @@ data:
           defaultsProviderTemplate: ""
           connectTimeout: "5"
           readTimeout: "15"
-          webSocket: true
-          jenkinsUrl: "http://jenkins-ui.default.svc.cluster.local:8080"
+          webSocket: {{ .Values.agent.webSocket }}
+          jenkinsUrl: "http://jenkins-ui.{{ .Values.controller.namespace }}.svc.cluster.local:{{ .Values.controller.service.HttpPort }}"
           maxRequestsPerHostStr: "32"
           name: "kubernetes"
-          namespace: "default"
+          namespace: "{{ .Values.agent.namespace }}"
           serverUrl: "https://kubernetes.default"
           podLabels:
           - key: "jenkins"
@@ -39,20 +39,19 @@ data:
               namespace: "default"
               containers:
               - name: "jnlp"
-                alwaysPullImage: false
+                alwaysPullImage: {{ .Values.agent.pullImage }}
                 args: "^${computer.jnlpmac} ^${computer.name}"
                 command: 
                 envVars:
                   - envVar:
                       key: "JENKINS_URL"
-                      value: "http://jenkins-ui.default.svc.cluster.local:8080/"
-                image: "jenkins/inbound-agent:3107.v665000b_51092-15"
+                      value: "http://jenkins-ui.{{ .Values.controller.namespace }}.svc.cluster.local:{{ .Values.controller.service.HttpPort }}/"
+                image: "{{ .Values.agent.image }}:{{ .Values.agent.tag }}"
                 privileged: "false"
                 ttyEnabled: false
-                workingDir: /home/jenkins/agent
+                workingDir: {{ .Values.agent.workingDir }}
               idleMinutes: 0
-              instanceCap: 2147483647
-              label: "jenkins-jenkins-agent "
+              label: "jenkins-agent "
               nodeUsageMode: "NORMAL"
               podRetention: Never
               showRawYaml: true
@@ -61,5 +60,7 @@ data:
       crumbIssuer:
         standard:
           excludeClientIPFromCrumb: true
+
+          
 
 

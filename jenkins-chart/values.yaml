@@ -77,4 +77,16 @@ persistance:
   accessModes: ReadWriteOnce
 
 
+agent:
+  webSocket: true
+
+  image: jenkins/inbound-agent
+  tag: alpine-jdk17
+  pullImage: false
+
+  namespace: default
+
+  workingDir: /home/jenkins/agent
+
+
 

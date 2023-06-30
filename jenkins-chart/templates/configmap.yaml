@@ -45,7 +45,7 @@ data:
                 envVars:
                   - envVar:
                       key: "JENKINS_URL"
-                      value: "http://jenkins.default.svc.cluster.local:8080/"
+                      value: "http://jenkins-ui.default.svc.cluster.local:8080/"
                   - envVar: 
                       key: "JENKINS_WEB_SOCKET"
                       value: "true"

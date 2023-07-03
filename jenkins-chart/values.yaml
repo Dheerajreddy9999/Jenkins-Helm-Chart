@@ -3,7 +3,7 @@ controller:
 
   image: dheerajlearningdocker/jenkins
   tag: v1.1-alpine
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
   replicas: 1
   env: ppe
   version: 2.387

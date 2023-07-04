@@ -19,12 +19,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: jenkins
-        {{- $img := .Values.controller.env  }}
-        {{- if eq $img "dev" }}
-        image: {{ .Values.controller.image }}:{{- if eq $img "dev"}}1.1 {{- else}}1.0 {{- end }}
-        {{- else }}
         image: {{ .Values.controller.image }}:{{ .Values.controller.tag }}
-        {{- end }}
         imagePullPolicy: {{ .Values.controller.imagePullPolicy }}
         resources:
           requests:
@@ -34,10 +29,10 @@ spec:
             cpu: {{ .Values.controller.resources.limits.cpu | quote }}
             memory: {{ .Values.controller.resources.limits.memory | quote }}
         ports:
-        - containerPort: {{ .Values.controller.ports.containerPort1 }}
-          name: {{ .Values.controller.ports.name1 }}
-        - containerPort: {{ .Values.controller.ports.containerPort2 }}
-          name: {{ .Values.controller.ports.name2 }}
+        - containerPort: {{ .Values.controller.ports.HttpPort }}
+          name: http
+        - containerPort: {{ .Values.controller.ports.JnlpPort }}
+          name: jnlp
            {{- if .Values.controller.HealthCheckEnable }}
           {{- include "jenkins.healthchecks" . | nindent 8 }}
           {{- end }}

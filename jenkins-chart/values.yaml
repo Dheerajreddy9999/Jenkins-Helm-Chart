@@ -24,10 +24,8 @@ controller:
       memory: 2Gi
 
   ports:
-    containerPort1: 8080
-    name1: http
-    containerPort2: 50000
-    name2: jnlp
+    HttpPort: 8080
+    JnlpPort: 50000
 
 
   securityContext:

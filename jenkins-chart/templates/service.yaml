@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-ui
+  name: {{ .Release.Name }}-ui
   namespace: {{ .Values.controller.namespace }}
 spec:
   selector:
@@ -20,7 +20,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jnkins-jnlp
+  name: {{ .Release.Name }}-jnlp
   namespace: {{ .Values.controller.namespace }}
 spec:
   selector:

@@ -3,10 +3,6 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-ui
   namespace: {{ .Values.controller.namespace }}
-  annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/path:   /
-      prometheus.io/port:   '8080'
 spec:
   selector:
     {{- include "jenkins.lables" . | nindent 4 }}

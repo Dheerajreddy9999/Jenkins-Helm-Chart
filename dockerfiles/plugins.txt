@@ -4,3 +4,4 @@ git
 configuration-as-code
 sonar
 kubernetes-cli
+terraform

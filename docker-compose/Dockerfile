@@ -5,4 +5,4 @@ USER root
 RUN groupadd -g 993 docker \
 && gpasswd -a root docker
 
-USER jenkins
+

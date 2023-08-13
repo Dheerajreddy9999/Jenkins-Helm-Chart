@@ -3,6 +3,7 @@ services:
   jenkins:
     build:
       context: .
+    privileged: true
     user: root
     ports:
       - 8080:8080

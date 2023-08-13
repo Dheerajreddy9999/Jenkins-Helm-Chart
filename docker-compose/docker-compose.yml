@@ -1,15 +1,44 @@
 version: '3.9'
 services:
+  docker:
+    image: docker:dind
+    privileged: true
+    command: --storage-driver=overlay2
+    networks:
+      jenkins:
+        aliases:
+          - docker 
+    ports:
+      - 2376:2376
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    container_name: jenkins-docker
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+
+
+
+
+
   jenkins:
     build:
       context: .
+    networks:
+      - jenkins
     ports:
       - 8080:8080
       - 50000:50000
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
     container_name: jenkins-lts
     volumes:
       - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/local/bin/docker:/usr/local/bin/docker
+      - jenkins-docker-certs:/certs/client:ro
 volumes:
   jenkins_home: {}
+  jenkins-docker-certs: {}
+networks:
+  jenkins:

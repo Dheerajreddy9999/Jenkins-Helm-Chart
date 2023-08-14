@@ -17,10 +17,6 @@ services:
       - jenkins_home:/var/jenkins_home
       - jenkins-docker-certs:/certs/client
 
-
-
-
-
   jenkins:
     build:
       context: .

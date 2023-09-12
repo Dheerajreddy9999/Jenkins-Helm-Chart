@@ -33,20 +33,8 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
-  sonar:
-    image: sonarqube:lts-community
-    networks:
-      - jenkins
-    ports:
-      - 9000:9000
-    container_name: sonarqube
-    volumes:
-      - sonar_data:/opt/sonarqube/data
-      - sonar_logs:/opt/sonarqube/logs
 volumes:
   jenkins_home: {}
   jenkins-docker-certs: {}
-  sonar_data: {}
-  sonar_logs: {}
 networks:
   jenkins:

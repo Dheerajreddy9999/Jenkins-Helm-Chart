@@ -15,7 +15,7 @@ spec:
     metadata:
       labels:
         app: jenkins
-        enc: dev
+        env: dev
         version: "2.387"
     spec:
       securityContext:
